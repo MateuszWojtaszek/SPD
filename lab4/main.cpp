@@ -49,6 +49,17 @@ public:
     this->tasks = tasks;
   }
 
+  void calculate_heuristic(){
+    
+    std::sort(tasks.begin(), tasks.end(), [](const Task &a, const Task &b) {
+      return a.release_time < b.release_time;
+    });
+    std::sort(tasks.begin(), tasks.end(), [](const Task &a, const Task &b) {
+      return a.cooling_time > b.cooling_time;
+    });
+
+  }
+
   void generate_test_instance(std::vector<Task> &tasks) {
       for (int i = 0; i < tasks.size(); i++) {
           tasks[i].id = i + 1;
@@ -64,6 +75,7 @@ public:
           std::cout << tasks[i].to_string() << std::endl;
       }
   }
+  
   int calculate_Cmax() {
       int Cmax = 0;
       int current_time = 0;
@@ -79,6 +91,10 @@ public:
       return Cmax;
   }
 
+  std::vector<Task> get_tasks(){
+    return tasks;
+  }
+
   private:
     std::vector<Task> tasks;
 };
@@ -92,13 +108,20 @@ int main() {
         {4, 1, 0, 3},
         {5, 2, 6, 1}
     };
+    
+    
     ProblemN problem(pregenerated_tasks);
+    
     // generate_test_instance(tasks, 10);
     // print_task_instance(tasks, 10);
     // int Cmax = calculate_Cmax(tasks, 10);
-    problem.print_task_instance();
+    // problem.print_task_instance();
+    problem.calculate_heuristic();
     int Cmax_for_pregenerated = problem.calculate_Cmax();
-
+    auto tasks = problem.get_tasks();
+    for(auto task: tasks){
+      std::cout << task.to_string() << std::endl;
+    }
     std::cout << "Cmax for pregenerated: "<<Cmax_for_pregenerated << std::endl;
     // std::cout << "Cmax: " << Cmax << std::endl;
 }
