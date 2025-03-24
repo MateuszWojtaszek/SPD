@@ -1,4 +1,8 @@
 #include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+
 /*************************************************************************
  * n zadań J = {1, 2, 3, 4, 5...n}
  * 1 procesor
@@ -31,53 +35,70 @@ struct Task {
     int processing_time;
     int release_time;
     int cooling_time;
+
+  std::string to_string(){
+    return "Task ID: " + std::to_string(id) + ", Processing Time: " + std::to_string(processing_time) +
+         ", Release Time: " + std::to_string(release_time) + ", Cooling Time: " + std::to_string(cooling_time);
+  }
 };
-void generate_test_instance(Task tasks[], int n) {
-    for (int i = 0; i < n; i++) {
-        tasks[i].id = i + 1;
-        tasks[i].processing_time = rand() % 10 + 1; // Random processing time between 1 and 10
-        tasks[i].release_time = rand() % 5; // Random release time between 0 and 4
-        tasks[i].cooling_time = rand() % 5 + 1; // Random cooling time between 1 and 5
-    }
-}
-void print_task_instance(Task tasks[], int n) {
-    std::cout << "Task ID | Processing Time | Release Time | Cooling Time" << std::endl;
-    for (int i = 0; i < n; i++) {
-        std::cout << tasks[i].id << "       | " << tasks[i].processing_time << "              | "
-                  << tasks[i].release_time << "            | " << tasks[i].cooling_time << std::endl;
-    }
-}
-int calculate_Cmax(Task tasks[], int n) {
-    int Cmax = 0;
-    int current_time = 0;
 
-    for (int i = 0; i < n; i++) {
-        if (current_time < tasks[i].release_time) {
-            current_time = tasks[i].release_time;
-        }
-        current_time += tasks[i].processing_time;
-        Cmax = std::max(Cmax, current_time + tasks[i].cooling_time);
-    }
+class ProblemN{
 
-    return Cmax;
-}
+public:
+  ProblemN(std::vector<Task> tasks){
+    this->tasks = tasks;
+  }
 
+  void generate_test_instance(std::vector<Task> &tasks) {
+      for (int i = 0; i < tasks.size(); i++) {
+          tasks[i].id = i + 1;
+          tasks[i].processing_time = rand() % 10 + 1; // Random processing time between 1 and 10
+          tasks[i].release_time = rand() % 5; // Random release time between 0 and 4
+          tasks[i].cooling_time = rand() % 5 + 1; // Random cooling time between 1 and 5
+      }
+  }
 
+  void print_task_instance() {
+      std::cout << "Task ID | Processing Time | Release Time | Cooling Time" << std::endl;
+      for (int i = 0; i < tasks.size(); i++) {
+          std::cout << tasks[i].to_string() << std::endl;
+      }
+  }
+  int calculate_Cmax() {
+      int Cmax = 0;
+      int current_time = 0;
+
+      for (int i = 0; i < tasks.size(); i++) {
+          if (current_time >= tasks[i].release_time) {
+              current_time = tasks[i].release_time;
+          }
+          current_time += tasks[i].processing_time;
+          Cmax = std::max(Cmax, current_time + tasks[i].cooling_time);
+      }
+
+      return Cmax;
+  }
+
+  private:
+    std::vector<Task> tasks;
+};
 
 int main() {
-    Task tasks[10];
-    Task pregenerated_tasks[5] = {
+    // Task tasks[10];
+    std::vector<Task> pregenerated_tasks = {
         {1, 2, 5, 2},
         {2, 5, 2, 7},
         {3, 1, 3, 1},
         {4, 1, 0, 3},
         {5, 2, 6, 1}
     };
+    ProblemN problem(pregenerated_tasks);
     // generate_test_instance(tasks, 10);
     // print_task_instance(tasks, 10);
     // int Cmax = calculate_Cmax(tasks, 10);
-    print_task_instance(pregenerated_tasks, 5);
-    int Cmax_for_pregenerated = calculate_Cmax(pregenerated_tasks, 5);
+    problem.print_task_instance();
+    int Cmax_for_pregenerated = problem.calculate_Cmax();
+
     std::cout << "Cmax for pregenerated: "<<Cmax_for_pregenerated << std::endl;
     // std::cout << "Cmax: " << Cmax << std::endl;
 }
