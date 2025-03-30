@@ -21,7 +21,7 @@ public:
     void print_task_instance();
     int get_cmax();
     std::vector<Task> get_tasks();
-    void read_tasks_from_file(const std::string &filename);
+    static std::vector<Task> read_tasks_from_file(const std::string &filename);
 
 protected:
     std::vector<Task> tasks;

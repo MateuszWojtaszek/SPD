@@ -6,3 +6,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 26)
 
 add_executable(lab4 main.cpp BaseProblem.cpp SortByQ.cpp SortByR.cpp Permutations.cpp)
+set_target_properties(lab4 PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/tasks"
+)

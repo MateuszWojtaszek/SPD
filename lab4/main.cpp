@@ -5,6 +5,7 @@
 #include <limits>
 #include "BaseProblem.h"
 #include "SortByR.h"
+#include "SortByQ.h"
 #include "Permutations.h"
 
 /*************************************************************************
@@ -43,22 +44,23 @@ int main() {
         {5, 2, 6, 1}
     };
 
-    SortByR problemR(pregenerated_tasks);
+    std::vector<Task> tasks = BaseProblem::read_tasks_from_file("/Users/mateuszwojtaszek/CLionProjects/SPD/SPD/lab4/tasks/first.txt");
+    //tasks = pregenerated_tasks;
+    SortByR problemR(tasks);
     problemR.calculate_heuristic();
     int cmax_for_problemR = problemR.get_cmax();
-    auto tasks = problemR.get_tasks();
-    for (const auto &task : tasks) {
-        std::cout << task.to_string() << std::endl;
-    }
+    // for (const auto &task : tasks) {
+    //     std::cout << task.to_string() << std::endl;
+    // }
     problemR.print_task_instance();
     std::cout << "Cmax for ProblemR: " << cmax_for_problemR << std::endl;
 
     std::vector<std::vector<Task>> permutations;
-    Permutations perm_problem(pregenerated_tasks);
+    Permutations perm_problem(tasks);
     perm_problem.generate_permutations(permutations);
     //perm_problem.print_permutations(permutations);
     std::cout << permutations.size() << std::endl;
-    //perm_problem.calculate_Cmax_for_permutations(permutations);
+    perm_problem.calculate_Cmax_for_permutations(permutations);
 
     return 0;
 }

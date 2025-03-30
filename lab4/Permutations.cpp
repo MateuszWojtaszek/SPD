@@ -41,7 +41,7 @@ void Permutations::calculate_Cmax_for_permutations(const std::vector<std::vector
     for (const auto &permutation : permutations) {
         Permutations problem(permutation);
         int Cmax = problem.get_cmax();
-        std::cout << "Cmax: " << Cmax << std::endl;
+        //std::cout << "Cmax: " << Cmax << std::endl;
         if (Cmax < min_Cmax) {
             min_Cmax = Cmax;
             best_permutation = permutation;

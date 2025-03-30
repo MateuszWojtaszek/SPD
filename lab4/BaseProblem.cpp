@@ -29,8 +29,8 @@ int BaseProblem::get_cmax() {
 std::vector<Task> BaseProblem::get_tasks() {
     return tasks;
 }
-
-void BaseProblem::read_tasks_from_file(const std::string &filename) {
+// in txt is R, P and Q
+std::vector<Task> BaseProblem::read_tasks_from_file(const std::string &filename) {
     std::ifstream file(filename);
     if (!file.is_open()) {
         throw std::runtime_error("Could not open file");
@@ -38,7 +38,7 @@ void BaseProblem::read_tasks_from_file(const std::string &filename) {
 
     int num_tasks;
     file >> num_tasks;
-    tasks.clear();
+    std::vector<Task> tasks;
     tasks.reserve(num_tasks);
 
     for (int i = 0; i < num_tasks; ++i) {
@@ -47,4 +47,5 @@ void BaseProblem::read_tasks_from_file(const std::string &filename) {
         task.id = i + 1;
         tasks.push_back(task);
     }
+    return tasks;
 }

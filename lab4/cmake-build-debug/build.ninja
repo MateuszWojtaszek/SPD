@@ -85,14 +85,14 @@ build CMakeFiles/lab4.dir/Permutations.cpp.o: CXX_COMPILER__lab4_unscanned_Debug
 
 
 #############################################
-# Link the executable lab4
+# Link the executable tasks/lab4
 
-build lab4: CXX_EXECUTABLE_LINKER__lab4_Debug CMakeFiles/lab4.dir/main.cpp.o CMakeFiles/lab4.dir/BaseProblem.cpp.o CMakeFiles/lab4.dir/SortByQ.cpp.o CMakeFiles/lab4.dir/SortByR.cpp.o CMakeFiles/lab4.dir/Permutations.cpp.o
+build tasks/lab4: CXX_EXECUTABLE_LINKER__lab4_Debug CMakeFiles/lab4.dir/main.cpp.o CMakeFiles/lab4.dir/BaseProblem.cpp.o CMakeFiles/lab4.dir/SortByQ.cpp.o CMakeFiles/lab4.dir/SortByR.cpp.o CMakeFiles/lab4.dir/Permutations.cpp.o
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk
   OBJECT_DIR = CMakeFiles/lab4.dir
   POST_BUILD = :
   PRE_LINK = :
-  TARGET_FILE = lab4
+  TARGET_FILE = tasks/lab4
   TARGET_PDB = lab4.dbg
 
 
@@ -121,6 +121,8 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # =============================================================================
 # Target aliases.
 
+build lab4: phony tasks/lab4
+
 # =============================================================================
 # Folder targets.
 
@@ -129,7 +131,7 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 #############################################
 # Folder: /Users/mateuszwojtaszek/CLionProjects/SPD/SPD/lab4/cmake-build-debug
 
-build all: phony lab4
+build all: phony tasks/lab4
 
 # =============================================================================
 # Built-in targets
