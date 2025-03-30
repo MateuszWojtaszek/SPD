@@ -1,0 +1,4 @@
+"/Users/mateuszwojtaszek/Applications/CLion 2024.3.5.app/Contents/bin/cmake/mac/aarch64/bin/cmake" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=/Users/mateuszwojtaszek/Applications/CLion 2024.3.5.app/Contents/bin/ninja/mac/aarch64/ninja" -G Ninja -S /Users/mateuszwojtaszek/CLionProjects/SPD/SPD/lab4 -B /Users/mateuszwojtaszek/CLionProjects/SPD/SPD/lab4/cmake-build-debug
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /Users/mateuszwojtaszek/CLionProjects/SPD/SPD/lab4/cmake-build-debug
