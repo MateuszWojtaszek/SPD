@@ -9,3 +9,9 @@ add_executable(lab4 main.cpp BaseProblem.cpp SortByQ.cpp SortByR.cpp Permutation
 set_target_properties(lab4 PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/tasks"
 )
+
+
+add_custom_command(TARGET lab4 POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy 
+  "${CMAKE_SOURCE_DIR}/tasks/*" "${CMAKE_BINARY_DIR}/tasks"
+)

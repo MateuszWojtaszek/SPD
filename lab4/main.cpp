@@ -44,7 +44,7 @@ int main() {
         {5, 2, 6, 1}
     };
 
-    std::vector<Task> tasks = BaseProblem::read_tasks_from_file("/Users/mateuszwojtaszek/CLionProjects/SPD/SPD/lab4/tasks/six.txt");
+    std::vector<Task> tasks = BaseProblem::read_tasks_from_file("build/tasks/six.txt");
     //tasks = pregenerated_tasks;
     SortByR problemR(tasks);
     problemR.calculate_heuristic();
@@ -62,8 +62,7 @@ int main() {
     //perm_problem.print_permutations(permutations);
     std::cout << permutations.size() << std::endl;
     long long elapsed_time = BaseProblem::stop_timer();
-    std::cout << "Elapsed time: " << elapsed_time << " ms" << std::endl;
-
-
+    std::cout << "Elapsed time: " << elapsed_time << " s" << std::endl;
+    
     return 0;
 }

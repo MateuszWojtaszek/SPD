@@ -23,7 +23,7 @@ public:
     std::vector<Task> get_tasks();
     static std::vector<Task> read_tasks_from_file(const std::string &filename);
     static void start_timer();
-    static long long stop_timer();
+    static float stop_timer();
 protected:
     std::vector<Task> tasks;
     static std::chrono::time_point<std::chrono::high_resolution_clock> start_time;

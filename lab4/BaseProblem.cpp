@@ -55,8 +55,8 @@ void BaseProblem::start_timer() {
     start_time = std::chrono::high_resolution_clock::now();
 }
 
-long long BaseProblem::stop_timer() {
+float BaseProblem::stop_timer() {
     auto end_time = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
-    return duration.count();
+    return static_cast<float>(duration.count())/1000.0f; // Convert to seconds
 }
