@@ -1,3 +1,0 @@
-/Users/mateuszwojtaszek/CLionProjects/SPD/SPD/lab4/cmake-build-debug/CMakeFiles/lab4.dir
-/Users/mateuszwojtaszek/CLionProjects/SPD/SPD/lab4/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/mateuszwojtaszek/CLionProjects/SPD/SPD/lab4/cmake-build-debug/CMakeFiles/rebuild_cache.dir
