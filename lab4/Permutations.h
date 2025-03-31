@@ -10,8 +10,7 @@ class Permutations : public BaseProblem {
 public:
     Permutations(std::vector<Task> tasks);
     void calculate_heuristic() override;
-    void generate_permutations(std::vector<std::vector<Task>> &permutations);
-    void print_permutations(const std::vector<std::vector<Task>> &permutations);
-    void calculate_Cmax_for_permutations(const std::vector<std::vector<Task>> &permutations);
+    void generate_permutations();
+    static void print_permutations(const std::vector<std::vector<Task>> &permutations);
 };
 #endif //PERMUTATIONS_H

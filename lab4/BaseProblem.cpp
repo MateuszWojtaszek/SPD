@@ -49,3 +49,14 @@ std::vector<Task> BaseProblem::read_tasks_from_file(const std::string &filename)
     }
     return tasks;
 }
+std::chrono::time_point<std::chrono::high_resolution_clock> BaseProblem::start_time;
+
+void BaseProblem::start_timer() {
+    start_time = std::chrono::high_resolution_clock::now();
+}
+
+long long BaseProblem::stop_timer() {
+    auto end_time = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
+    return duration.count();
+}

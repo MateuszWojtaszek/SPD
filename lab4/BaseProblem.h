@@ -10,7 +10,7 @@
 #include <fstream>
 #include <iostream>
 #include <algorithm>
-
+#include <chrono>
 class BaseProblem {
 public:
     BaseProblem() = default;
@@ -22,9 +22,12 @@ public:
     int get_cmax();
     std::vector<Task> get_tasks();
     static std::vector<Task> read_tasks_from_file(const std::string &filename);
-
+    static void start_timer();
+    static long long stop_timer();
 protected:
     std::vector<Task> tasks;
+    static std::chrono::time_point<std::chrono::high_resolution_clock> start_time;
+
 };
 
 
