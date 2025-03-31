@@ -17,7 +17,7 @@ int BaseProblem::get_cmax() {
     int current_time = 0;
 
     for (const auto &task : tasks) {
-        if (current_time >= task.release_time) {
+        if (current_time <= task.release_time) {
             current_time = task.release_time;
         }
         current_time += task.processing_time;

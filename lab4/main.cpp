@@ -7,7 +7,7 @@
 #include "SortByR.h"
 #include "SortByQ.h"
 #include "Permutations.h"
-
+#include "Schrage.h"
 /*************************************************************************
  * n zadań J = {1, 2, 3, 4, 5...n}
  * 1 procesor
@@ -44,23 +44,28 @@ int main() {
         {5, 2, 6, 1}
     };
 
-    std::vector<Task> tasks = BaseProblem::read_tasks_from_file("/Users/mateuszwojtaszek/CLionProjects/SPD/SPD/lab4/tasks/six.txt");
+    std::vector<Task> tasks = BaseProblem::read_tasks_from_file("/Users/mateuszwojtaszek/CLionProjects/SPD/SPD/lab4/tasks/first.txt");
+    Schrage problemN(tasks);
     //tasks = pregenerated_tasks;
-    SortByR problemR(tasks);
-    problemR.calculate_heuristic();
-    int cmax_for_problemR = problemR.get_cmax();
-    // for (const auto &task : tasks) {
-    //     std::cout << task.to_string() << std::endl;
-    // }
-    problemR.print_task_instance();
-    std::cout << "Cmax for ProblemR: " << cmax_for_problemR << std::endl;
-
-    std::vector<std::vector<Task>> permutations;
-    Permutations perm_problem(tasks);
+    // SortByR problemR(tasks);
+    // problemR.calculate_heuristic();
+    // int cmax_for_problemR = problemR.get_cmax();
+    // // for (const auto &task : tasks) {
+    // //     std::cout << task.to_string() << std::endl;
+    // // }
+    // problemR.print_task_instance();
+    // std::cout << "Cmax for ProblemR: " << cmax_for_problemR << std::endl;
+    //
+    // std::vector<std::vector<Task>> permutations;
+    // Permutations perm_problem(tasks);
     BaseProblem::start_timer();
-    perm_problem.generate_permutations();
+    problemN.calculate_heuristic();
+    int cmax_for_problemR = problemN.get_cmax();
+    problemN.print_task_instance();
+    std::cout << "Cmax for ProblemN: " << cmax_for_problemR << std::endl;
+    // perm_problem.generate_permutations();
     //perm_problem.print_permutations(permutations);
-    std::cout << permutations.size() << std::endl;
+    // std::cout << permutations.size() << std::endl;
     long long elapsed_time = BaseProblem::stop_timer();
     std::cout << "Elapsed time: " << elapsed_time << " ms" << std::endl;
 
