@@ -8,6 +8,7 @@
 #include "SortByQ.h"
 #include "Permutations.h"
 #include "Schrage.h"
+#include "SchrageDiv.h"
 /*************************************************************************
  * n zadań J = {1, 2, 3, 4, 5...n}
  * 1 procesor
@@ -44,10 +45,12 @@ int main() {
         {5, 2, 6, 1}
     };
 
-    std::vector<Task> tasks = BaseProblem::read_tasks_from_file("/Users/mateuszwojtaszek/CLionProjects/SPD/SPD/lab4/tasks/first.txt");
+    std::vector<Task> tasks = BaseProblem::read_tasks_from_file("/home/lemonx/it/pwr/SPD/build/tasks/first.txt");
     Schrage problemN(tasks);
+    // SchrageDiv problemN(tasks);
+
     //tasks = pregenerated_tasks;
-    // SortByR problemR(tasks);
+    // SortByR problemN(tasks);
     // problemR.calculate_heuristic();
     // int cmax_for_problemR = problemR.get_cmax();
     // // for (const auto &task : tasks) {

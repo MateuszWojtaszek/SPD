@@ -3,6 +3,7 @@
 //
 
 #include "Schrage.h"
+#include <queue>
 
 Schrage::Schrage(std::vector<Task> tasks) : BaseProblem(tasks) {}
 
