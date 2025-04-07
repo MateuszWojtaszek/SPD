@@ -35,6 +35,8 @@
  * 5) dla każdej wyliczyć funckje celu i sprawdzić
  * 6) Wczytać instancje testowe z Eportalu, policzyć błąd względny
  **********************************************************************/
+// gnatowski pwr Cariela
+
 
 int main() {
     std::vector<Task> pregenerated_tasks = {
@@ -46,8 +48,8 @@ int main() {
     };
 
     std::vector<Task> tasks = BaseProblem::read_tasks_from_file("/home/lemonx/it/pwr/SPD/build/tasks/first.txt");
-    Schrage problemN(tasks);
-    // SchrageDiv problemN(tasks);
+    // Schrage problemN(tasks);
+    SchrageDiv problemN(tasks);
 
     //tasks = pregenerated_tasks;
     // SortByR problemN(tasks);
