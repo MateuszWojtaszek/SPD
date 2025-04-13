@@ -32,7 +32,7 @@ void SchrageDiv::calculate_heuristic() {
 
     // Reset stanu i wypełnienie N wskaźnikami do kopii zadań
     for (Task &task: tasks) {
-        task.processing_time = task.processing_time; // Resetuj pozostały czas
+        // task.processing_time = task.processing_time; // Resetuj pozostały czas
         N.push(&task);
     }
 
@@ -72,50 +72,50 @@ void SchrageDiv::calculate_heuristic() {
         }
 
         // --- Oblicz, o ile przesunąć czas ---
-        long long time_step = 0;
-        if (current_task_ptr != nullptr) {
-            // Opcja 1: Aktualnie wykonywane zadanie się zakończy
-            time_step = current_task_ptr->processing_time;
+        long long time_step = 1; // 0
+        // if (current_task_ptr != nullptr) {
+        //     // Opcja 1: Aktualnie wykonywane zadanie się zakończy
+        //     time_step = current_task_ptr->processing_time;
 
-            // Opcja 2: Nadejdzie nowe zadanie wcześniej
-            if (!N.empty()) {
-                long long time_to_next_arrival = N.top()->release_time - current_time;
-                // Jeśli nadejście jest w przyszłości i wcześniej niż zakończenie
-                if (time_to_next_arrival > 0 && time_to_next_arrival < time_step) {
-                    time_step = time_to_next_arrival;
-                }
-                // Jeśli nadejście jest teraz lub w przeszłości, krok = 0
-                else if (time_to_next_arrival <= 0) {
-                    time_step = 0; // Przetwórz zdarzenia w obecnej chwili
-                }
-            }
-        } else {
-            // Maszyna jest bezczynna
-            if (!N.empty()) {
-                // Czekaj na następne zadanie
-                time_step = N.top()->release_time - current_time;
-                if (time_step < 0) time_step = 0; // Jeśli już nadeszło
-            } else {
-                // N puste, G puste, nic nie jest wykonywane -> Koniec
-                if (G.empty()) break;
-                // Jeśli G nie jest puste, to zadanie powinno zostać wybrane powyżej.
-                // Ten `else` nie powinien być osiągnięty, jeśli G nie jest puste.
-                time_step = 0; // Na wszelki wypadek
-            }
-        }
+        //     // Opcja 2: Nadejdzie nowe zadanie wcześniej
+        //     if (!N.empty()) {
+        //         long long time_to_next_arrival = N.top()->release_time - current_time;
+        //         // Jeśli nadejście jest w przyszłości i wcześniej niż zakończenie
+        //         if (time_to_next_arrival > 0 && time_to_next_arrival < time_step) {
+        //             time_step = time_to_next_arrival;
+        //         }
+        //         // Jeśli nadejście jest teraz lub w przeszłości, krok = 0
+        //         else if (time_to_next_arrival <= 0) {
+        //             time_step = 0; // Przetwórz zdarzenia w obecnej chwili
+        //         }
+        //     }
+        // } else {
+        //     // Maszyna jest bezczynna
+        //     if (!N.empty()) {
+        //         // Czekaj na następne zadanie
+        //         time_step = N.top()->release_time - current_time;
+        //         if (time_step < 0) time_step = 0; // Jeśli już nadeszło
+        //     } else {
+        //         // N puste, G puste, nic nie jest wykonywane -> Koniec
+        //         if (G.empty()) break;
+        //         // Jeśli G nie jest puste, to zadanie powinno zostać wybrane powyżej.
+        //         // Ten `else` nie powinien być osiągnięty, jeśli G nie jest puste.
+        //         time_step = 0; // Na wszelki wypadek
+        //     }
+        // }
 
 
         // --- Przesuń czas i zaktualizuj stan ---
-        if (time_step > 0) {
-            current_time += time_step; // Przesuń czas
-            if (current_task_ptr != nullptr) {
-                // Zmniejsz pozostały czas bieżącego zadania
-                current_task_ptr->processing_time -= time_step;
-            }
+        // if (time_step > 0) {
+        current_time += time_step; // Przesuń czas
+        if (current_task_ptr != nullptr) {
+            // Zmniejsz pozostały czas bieżącego zadania
+            current_task_ptr->processing_time -= time_step;
         }
+        // }
 
         // --- Sprawdź, czy zadanie się zakończyło (tylko jeśli krok > 0) ---
-        if (time_step > 0 && current_task_ptr != nullptr && current_task_ptr->processing_time <= 0) {
+        if (current_task_ptr != nullptr && current_task_ptr->processing_time <= 0) {
             // Zadanie zakończone
             cmax_result = std::max(cmax_result, current_time + current_task_ptr->cooling_time);
             current_task_ptr = nullptr; // Maszyna staje się wolna

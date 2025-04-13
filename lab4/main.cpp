@@ -47,7 +47,7 @@
 #include "SortByRq.h"
 
 int main() {
-    const std::string base_path = "/Users/mateuszwojtaszek/CLionProjects/SPD/SPD/lab4/tasks/SCHRAGE";
+    const std::string base_path = "/home/lemonx/it/pwr/SPD/lab4/tasks/SCHRAGE";
     const std::string extension = ".DAT";
 
     for (int i = 1; i <= 9; ++i) {
