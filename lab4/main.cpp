@@ -38,42 +38,42 @@
 // gnatowski pwr Cariela
 
 
+#include <iostream>
+#include <vector>
+#include "SchrageDiv.h"
+
+#include <iostream>
+#include <vector>
+#include "SortByRq.h"
+
 int main() {
-    std::vector<Task> pregenerated_tasks = {
-        {1, 2, 5, 2},
-        {2, 5, 2, 7},
-        {3, 1, 3, 1},
-        {4, 1, 0, 3},
-        {5, 2, 6, 1}
-    };
+    const std::string base_path = "/Users/mateuszwojtaszek/CLionProjects/SPD/SPD/lab4/tasks/SCHRAGE";
+    const std::string extension = ".DAT";
 
-    std::vector<Task> tasks = BaseProblem::read_tasks_from_file("/home/lemonx/it/pwr/SPD/build/tasks/first.txt");
-    // Schrage problemN(tasks);
-    SchrageDiv problemN(tasks);
+    for (int i = 1; i <= 9; ++i) {
+        std::string filepath = base_path + std::to_string(i) + extension;
+        std::cout << "==== INSTANCJA: " << i << " ====" << std::endl;
 
-    //tasks = pregenerated_tasks;
-    // SortByR problemN(tasks);
-    // problemR.calculate_heuristic();
-    // int cmax_for_problemR = problemR.get_cmax();
-    // // for (const auto &task : tasks) {
-    // //     std::cout << task.to_string() << std::endl;
-    // // }
-    // problemR.print_task_instance();
-    // std::cout << "Cmax for ProblemR: " << cmax_for_problemR << std::endl;
-    //
-    // std::vector<std::vector<Task>> permutations;
-    // Permutations perm_problem(tasks);
-    BaseProblem::start_timer();
-    problemN.calculate_heuristic();
-    int cmax_for_problemR = problemN.get_cmax();
-    problemN.print_task_instance();
-    std::cout << "Cmax for ProblemN: " << cmax_for_problemR << std::endl;
-    // perm_problem.generate_permutations();
-    //perm_problem.print_permutations(permutations);
-    // std::cout << permutations.size() << std::endl;
-    long long elapsed_time = BaseProblem::stop_timer();
-    std::cout << "Elapsed time: " << elapsed_time << " ms" << std::endl;
+        try {
+            // Wczytaj zadania
+            std::vector<Task> tasks = BaseProblem::read_tasks_from_file(filepath);
+            int num_tasks = static_cast<int>(tasks.size());
 
+            // Uruchom algorytm Schrage’a z podziałem
+            SchrageDiv problem(tasks);
+            problem.start_timer();
+            problem.calculate_heuristic();
+            int Cmax = problem.get_cmax();
+            float time = problem.stop_timer();
+
+            // Wypisz wynik
+            std::cout << "Liczba zadań: " << num_tasks << std::endl;
+            std::cout << "Cmax: " << Cmax << " | Czas działania: " << time << "s" << std::endl << std::endl;
+
+        } catch (const std::exception &e) {
+            std::cerr << "Błąd przy przetwarzaniu pliku " << filepath << ": " << e.what() << std::endl;
+        }
+    }
 
     return 0;
 }
