@@ -8,8 +8,13 @@
 
 class SchrageDiv:public BaseProblem {
 public:
+    int Cmax;
     explicit SchrageDiv(std::vector<Task> tasks);
     void calculate_heuristic() override;
+    int get_thsis_Cmax() const {
+        return Cmax;
+    }
+
 };
 
 

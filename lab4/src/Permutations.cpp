@@ -13,7 +13,7 @@ void Permutations::calculate_heuristic() {
     // This method is not applicable for permutations, so it can be left empty or throw an exception
 }
 
-void Permutations::generate_permutations() {
+int Permutations::generate_permutations() {
     std::sort(tasks.begin(), tasks.end(), [](const Task &a, const Task &b) {
         return a.id < b.id;
     });
@@ -38,6 +38,7 @@ void Permutations::generate_permutations() {
         std::cout << task.id << "  | " << task.processing_time << "              | "
                   << task.release_time << "            | " << task.cooling_time << std::endl;
     }
+    return min_Cmax;
 }
 
 void Permutations::print_permutations(const std::vector<std::vector<Task>> &permutations) {

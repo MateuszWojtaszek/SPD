@@ -59,16 +59,16 @@ int main() {
             std::vector<Task> tasks = BaseProblem::read_tasks_from_file(filepath);
             int num_tasks = static_cast<int>(tasks.size());
 
-            // Uruchom algorytm Schrage’a z podziałem
+            // Uruchom algorytm Schrage’a
             SchrageDiv problem(tasks);
             problem.start_timer();
             problem.calculate_heuristic();
-            int Cmax = problem.get_cmax();
+            int Cmax = problem.get_thsis_Cmax();
             float time = problem.stop_timer();
 
             // Wypisz wynik
             std::cout << "Liczba zadań: " << num_tasks << std::endl;
-            std::cout << "Cmax: " << Cmax << " | Czas działania: " << time << "s" << std::endl << std::endl;
+            std::cout << "Cmax: " << Cmax << " | Czas działania: " << time << "ms" << std::endl << std::endl;
 
         } catch (const std::exception &e) {
             std::cerr << "Błąd przy przetwarzaniu pliku " << filepath << ": " << e.what() << std::endl;
