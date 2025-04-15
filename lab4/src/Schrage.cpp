@@ -17,15 +17,13 @@ void Schrage::calculate_heuristic() {
 
     // Definicja komparatora dla kolejki N (min-heap wg release_time)
     auto cmp_r = [](const Task &a, const Task &b) {
-        // Jeśli czasy równe, można dodać dodatkowe kryterium (np. ID) dla stabilności
-        if (a.release_time == b.release_time) return a.id > b.id; // Opcjonalnie
+        if (a.release_time == b.release_time) return a.id > b.id;
         return a.release_time > b.release_time;
     };
 
     // Definicja komparatora dla kolejki G (max-heap wg cooling_time)
     auto cmp_q = [](const Task &a, const Task &b) {
-        // Jeśli czasy równe, można dodać dodatkowe kryterium (np. ID) dla stabilności
-        if (a.cooling_time == b.cooling_time) return a.id > b.id; // Opcjonalnie
+        if (a.cooling_time == b.cooling_time) return a.id > b.id; //gdy równe to id
         return a.cooling_time < b.cooling_time;
     };
 

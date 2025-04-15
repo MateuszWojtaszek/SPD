@@ -60,10 +60,10 @@ int main() {
             int num_tasks = static_cast<int>(tasks.size());
 
             // Uruchom algorytm Schrage’a
-            SchrageDiv problem(tasks);
+            Schrage problem(tasks);
             problem.start_timer();
             problem.calculate_heuristic();
-            int Cmax = problem.get_thsis_Cmax();
+            int Cmax = problem.get_cmax();
             float time = problem.stop_timer();
 
             // Wypisz wynik
