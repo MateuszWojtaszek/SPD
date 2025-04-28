@@ -11,5 +11,5 @@ target_sources(Problem2
 
 target_include_directories(Problem2
   PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib
 )
