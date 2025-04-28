@@ -8,7 +8,9 @@ add_executable(Problem2 main.cpp)
 target_sources(Problem2
   PRIVATE
     src/BaseProblem.cpp
-)
+    src/LSA.cpp
+    src/LPT.cpp
+    )
 
 target_include_directories(Problem2
   PRIVATE

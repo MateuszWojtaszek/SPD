@@ -2,12 +2,20 @@
 #include <limits>
 #include "Processor.hpp"
 
-BaseProblem::BaseProblem(std::vector<Task> tasks, int _maszyny) : tasks(tasks),maszyny(_maszyny) {}
+BaseProblem::BaseProblem(std::vector<Task> tasks, int _maszyny) : tasks(tasks),maszyny(_maszyny) {
+
+  for (size_t i = 0; i < _maszyny; i++)
+  {
+    Processor processor;
+    processor.id = i + 1;
+    processors.push_back(processor);
+  }
+}
 
 void BaseProblem::print_task_instance() {
     std::cout << "Task ID | Processing Time" << std::endl;
-    for (const auto &task : tasks) {
-        std::cout << task.to_string() << std::endl;
+    for (const auto &proc : processors) {
+        std::cout << proc.to_string() << std::endl;
     }
 }
 
