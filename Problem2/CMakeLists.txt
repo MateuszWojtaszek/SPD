@@ -4,3 +4,12 @@ project(Problem2)
 set(CMAKE_CXX_STANDARD 26)
 
 add_executable(Problem2 main.cpp)
+
+target_sources(Problem2
+  PRIVATE
+)
+
+target_include_directories(Problem2
+  PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
