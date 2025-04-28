@@ -10,6 +10,16 @@
  *
  */
 
+template <typename T>
+void pronto_task(std::vector<Task> &tasks, int maszyny) {
+  static_assert(std::is_base_of<BaseProblem, T>::value, "T must derive from BaseProblem");
+  T problem(tasks, maszyny);
+  problem.calculate_heuristic();
+  auto cmax = problem.get_cmax();
+  problem.print_task_instance();
+  std::cout << "Cmax: " << cmax << std::endl;
+
+}
 
 
 
@@ -22,21 +32,8 @@ int main() {
   tasks.push_back(Task(4, 5));
   tasks.push_back(Task(5, 6));
   
-  std::cout << "LSA:" << std::endl;
-  LSA lsa(tasks, 2);
-
-  lsa.calculate_heuristic();  
-  auto cmax= lsa.get_cmax();
-  lsa.print_task_instance();
-  std::cout << "Cmax: " << cmax << std::endl; 
-  
-  std::cout << "LPT:" << std::endl;
-  LPT lpt(tasks, 2);
-  lpt.calculate_heuristic();
-  cmax= lpt.get_cmax();
-  lpt.print_task_instance();
-  std::cout << "Cmax: " << cmax << std::endl;
-  
+  pronto_task<LSA>(tasks, 2);
+  pronto_task<LPT>(tasks, 2);
 
   return 0;
 }
