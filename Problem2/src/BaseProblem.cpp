@@ -1,4 +1,6 @@
 #include "BaseProblem.hpp"
+#include <limits>
+#include "Processor.hpp"
 
 BaseProblem::BaseProblem(std::vector<Task> tasks, int _maszyny) : tasks(tasks),maszyny(_maszyny) {}
 
@@ -10,17 +12,16 @@ void BaseProblem::print_task_instance() {
 }
 
 int BaseProblem::get_cmax() {
-    int Cmax = 0;
-    int current_time = 0;
-
-    // for (const auto &task : tasks) {
-    //     if (current_time <= task.release_time) {
-    //         current_time = task.release_time;
-    //     }
-    //     current_time += task.processing_time;
-    //     Cmax = std::max(Cmax, current_time + task.cooling_time);
-    // }
-    return Cmax;
+  int Cmax = 0;
+  for (size_t i = 0; i < processors.size(); i++)
+  {
+    auto cm = processors[i].get_cmax();
+    if(cm > Cmax)
+    {
+      Cmax = processors[i].get_cmax();
+    } 
+  }
+  return Cmax;
 }
 
 std::vector<Task> BaseProblem::get_tasks() {

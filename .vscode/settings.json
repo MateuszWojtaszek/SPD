@@ -1,6 +1,6 @@
 {
   "ros.distro": "humble",
   "C_Cpp.default.compilerPath": "/usr/bin/gcc-12",
-  "cmake.sourceDirectory": "/home/lemonx/it/pwr/SPD/lab4",
+  "cmake.sourceDirectory": "/home/lemonx/it/SPD/Problem2",
   "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
 }

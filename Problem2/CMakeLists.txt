@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.31)
+cmake_minimum_required(VERSION 3.28)
 project(Problem2)
 
 set(CMAKE_CXX_STANDARD 26)
@@ -7,6 +7,7 @@ add_executable(Problem2 main.cpp)
 
 target_sources(Problem2
   PRIVATE
+    src/BaseProblem.cpp
 )
 
 target_include_directories(Problem2
