@@ -9,12 +9,9 @@
 struct Task {
     int id;
     int processing_time;
-    int release_time;
-    int cooling_time;
 
     std::string to_string() const {
-        return "Task ID: " + std::to_string(id) + ", Processing Time: " + std::to_string(processing_time) +
-               ", Release Time: " + std::to_string(release_time) + ", Cooling Time: " + std::to_string(cooling_time);
+        return "Task ID: " + std::to_string(id) + ", Processing Time: " + std::to_string(processing_time);
     }
 };
 #endif //TASK_H
