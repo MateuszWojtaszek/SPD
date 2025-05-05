@@ -10,6 +10,7 @@ target_sources(Problem2
     src/BaseProblem.cpp
     src/LSA.cpp
     src/LPT.cpp
+    src/Zupelny.cpp
     )
 
 target_include_directories(Problem2
