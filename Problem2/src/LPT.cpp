@@ -12,6 +12,8 @@
 
 
 LPT::LPT(std::vector<Task> tasks, int maszyny): BaseProblem(tasks, maszyny) {
+  std::cout << "LPT" << std::endl;
+  
 }
 
 void LPT::calculate_heuristic() {

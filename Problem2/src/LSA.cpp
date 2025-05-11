@@ -12,7 +12,7 @@
 
 
 LSA::LSA(std::vector<Task> tasks, int maszyny): BaseProblem(tasks, maszyny) {
-
+  std::cout << "LSA" << std::endl;
 }
 
 

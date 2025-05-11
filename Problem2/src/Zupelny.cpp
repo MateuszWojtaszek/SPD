@@ -12,6 +12,7 @@
 
 
 Zupelny::Zupelny(std::vector<Task> tasks, int maszyny): BaseProblem(tasks, maszyny) {
+  std::cout << "Zupelny" << std::endl;
 
 }
 

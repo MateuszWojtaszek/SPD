@@ -11,6 +11,7 @@ target_sources(Problem2
     src/LSA.cpp
     src/LPT.cpp
     src/Zupelny.cpp
+    src/PDynamczine.cpp
     )
 
 target_include_directories(Problem2
