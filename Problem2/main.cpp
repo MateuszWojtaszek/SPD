@@ -47,16 +47,16 @@ int main() {
   std::vector<Task> tasks;
 
   std::srand(std::time(nullptr)); // Seed the random number generator
-  // for (int i = 1; i <= 50; ++i) {
-  //   int random_value = std::rand() % 101; // Generate a random value between 0 and 100
-  //   tasks.push_back(Task(i, random_value));
-  // }
+  for (int i = 1; i <= 24; ++i) {
+    int random_value = std::rand() % 101; // Generate a random value between 0 and 100
+    tasks.push_back(Task(i, random_value));
+  }
 
-  tasks.push_back(Task(1, 2));
-  tasks.push_back(Task(2, 3));
-  tasks.push_back(Task(3, 4));
-  tasks.push_back(Task(4, 5));
-  tasks.push_back(Task(5, 6));
+  // tasks.push_back(Task(1, 2));
+  // tasks.push_back(Task(2, 3));
+  // tasks.push_back(Task(3, 4));
+  // tasks.push_back(Task(4, 5));
+  // tasks.push_back(Task(5, 6));
   // tasks.push_back(Task(6, 7));
   // tasks.push_back(Task(7, 23));
   // tasks.push_back(Task(8, 4));
@@ -65,7 +65,7 @@ int main() {
   
   pronto_task<LSA>(tasks, 2);
   pronto_task<LPT>(tasks, 2);
-  // pronto_task<Zupelny>(tasks, 2);
+  pronto_task<Zupelny>(tasks, 2);
   pronto_task<PDynamczine>(tasks, 2);
   // pronto_task<PTAS>(tasks, 2);
   // pronto_task<FPTAS>(tasks, 2);

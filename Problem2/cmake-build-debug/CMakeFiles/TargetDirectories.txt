@@ -1,0 +1,3 @@
+/Users/mateuszwojtaszek/CLionProjects/SPD/SPD/Problem2/cmake-build-debug/CMakeFiles/Problem2.dir
+/Users/mateuszwojtaszek/CLionProjects/SPD/SPD/Problem2/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/mateuszwojtaszek/CLionProjects/SPD/SPD/Problem2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
