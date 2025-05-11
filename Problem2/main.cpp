@@ -11,6 +11,8 @@
 #include "LPT.hpp"
 #include "Zupelny.hpp"
 #include "PDynamczine.hpp"
+#include "PTAS.hpp"
+#include "FPTAS.hpp"
 
 /* Zadanie - Podział n zadań na m maszyn i liczenie Cmax -> maksymalny czas
  *
@@ -55,16 +57,18 @@ int main() {
   tasks.push_back(Task(3, 4));
   tasks.push_back(Task(4, 5));
   tasks.push_back(Task(5, 6));
-  tasks.push_back(Task(6, 7));
-  tasks.push_back(Task(7, 23));
-  tasks.push_back(Task(8, 4));
-  tasks.push_back(Task(9, 3));
-  tasks.push_back(Task(10, 1));
+  // tasks.push_back(Task(6, 7));
+  // tasks.push_back(Task(7, 23));
+  // tasks.push_back(Task(8, 4));
+  // tasks.push_back(Task(9, 3));
+  // tasks.push_back(Task(10, 1));
   
   pronto_task<LSA>(tasks, 2);
   pronto_task<LPT>(tasks, 2);
   // pronto_task<Zupelny>(tasks, 2);
   pronto_task<PDynamczine>(tasks, 2);
-  
+  // pronto_task<PTAS>(tasks, 2);
+  // pronto_task<FPTAS>(tasks, 2);
+
   return 0;
 }
