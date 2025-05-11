@@ -22,6 +22,10 @@ class BaseProblem {
     static std::vector<Task> read_tasks_from_file(const std::string &filename);
     static void start_timer();
     static float stop_timer();
+
+    std::vector<Processor> get_processors() {
+        return processors;
+    }
   protected:
     std::vector<Task> tasks;
     std::vector<Processor> processors;

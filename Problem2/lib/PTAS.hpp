@@ -17,4 +17,7 @@ class PTAS: public BaseProblem {
 
     void calculate_heuristic() override;
 
+  private:
+    int k = 3; // Liczba dużych zadań
+
   };
