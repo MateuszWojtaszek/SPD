@@ -47,7 +47,7 @@ int main() {
   std::vector<Task> tasks;
 
   std::srand(std::time(nullptr)); // Seed the random number generator
-  for (int i = 1; i <= 24; ++i) {
+  for (int i = 1; i <= 20; ++i) {
     int random_value = std::rand() % 101; // Generate a random value between 0 and 100
     tasks.push_back(Task(i, random_value));
   }
@@ -68,7 +68,7 @@ int main() {
   pronto_task<Zupelny>(tasks, 2);
   pronto_task<PDynamczine>(tasks, 2);
   // pronto_task<PTAS>(tasks, 2);
-  // pronto_task<FPTAS>(tasks, 2);
+  pronto_task<FPTAS>(tasks, 2);
 
   return 0;
 }

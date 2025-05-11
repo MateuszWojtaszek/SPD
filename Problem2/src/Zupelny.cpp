@@ -51,7 +51,7 @@ void Zupelny::find_best_assignment_recursive(
         next_processors_state[0].tasks.push_back(task_to_assign);
         find_best_assignment_recursive(current_task_index + 1, next_processors_state, min_cmax, best_processors_state);
     } else {
-        // Standardowa logika dla M maszyn (>2 lub <2) lub dla zadań innych niż pierwsze przy 2 maszynach
+        // dla M maszyn (>2) lub dla zadań innych niż pierwsze przy 2 maszynach
         for (int i = 0; i < this->maszyny; ++i) {
             // Stwórz kopię stanu procesorów dla nowej gałęzi rekurencji
             std::vector<Processor> next_processors_state = current_processors_state;
@@ -87,7 +87,7 @@ void Zupelny::calculate_heuristic() {
         initial_processors_state.push_back(p);
     }
 
-    int min_cmax_found = std::numeric_limits<int>::max();
+    int min_cmax_found = std::numeric_limits<int>::max(); // pewnosc ze Cmax ma maksymalną wartość
     std::vector<Processor> best_assignment;
 
     // Rozpocznij rekurencyjne przeszukiwanie
