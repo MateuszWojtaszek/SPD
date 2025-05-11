@@ -1,12 +1,9 @@
 #include "FPTAS.hpp"
-#include <numeric>   // Dla std::accumulate
-#include <algorithm> // Dla std::reverse (jeśli zdecydujesz się użyć)
 #include <cmath>     // Dla std::floor
 #include <iostream>  // Dla std::cout, std::cerr
 
-// Konstruktor - nie przyjmuje już epsilon_val
 FPTAS::FPTAS(std::vector<Task> tasks, int maszyny)
-    : BaseProblem(tasks, maszyny) { // epsilon jest teraz stałym polem klasy
+    : BaseProblem(tasks, maszyny) {
     std::cout << "FPTAS initialized (epsilon = " << epsilon << ")" << std::endl;
     if (this->maszyny != 2 && !this->tasks.empty()) {
         std::cerr << "Ostrzezenie: FPTAS zaimplementowany tutaj jest dla 2 maszyn." << std::endl;
@@ -96,7 +93,7 @@ void FPTAS::calculate_heuristic() {
     for (const auto& task : this->tasks) {
         total_original_processing_time += task.processing_time;
     }
-
+    // jak łączny czas na wszystkich zadaniach wynosi 0 to nie ma co robić
     if (total_original_processing_time == 0) {
         if (!this->processors.empty()) {
              this->processors[0].tasks.clear();
@@ -109,7 +106,6 @@ void FPTAS::calculate_heuristic() {
     }
 
     // Krok 1: Oblicz współczynnik skalujący k
-    // Używamy stałej wartości EPSILON_VALUE zdefiniowanej w klasie
     double k_double = std::floor((epsilon * static_cast<double>(total_original_processing_time)) /
                                  (2.0 * static_cast<double>(this->tasks.size())));
 
