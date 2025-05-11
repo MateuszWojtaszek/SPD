@@ -50,20 +50,20 @@ void PDynamczine::calculate_heuristic() {
   T[n][0] = false;
 
   // printowanie tabelki PD
-  std::cout << "PDynamczine Table" << std::endl;
-  std::cout << "     "; 
-  for (size_t k = 0; k < max_time_k; k++) {
-    std::cout << std::setw(4) << k << " ";
-  }
-  std::cout << std::endl;
+  // std::cout << "PDynamczine Table" << std::endl;
+  // std::cout << "     "; 
+  // for (size_t k = 0; k < max_time_k; k++) {
+  //   std::cout << std::setw(4) << k << " ";
+  // }
+  // std::cout << std::endl;
 
-  for (size_t j = 0; j <= tasks.size(); j++) {
-    std::cout << std::setw(4) << j << " ";
-    for (size_t k = 0; k < max_time_k; k++) {
-      std::cout << std::setw(4) << T[j][k] << " ";
-    }
-    std::cout << std::endl;
-  }
+  // for (size_t j = 0; j <= tasks.size(); j++) {
+  //   std::cout << std::setw(4) << j << " ";
+  //   for (size_t k = 0; k < max_time_k; k++) {
+  //     std::cout << std::setw(4) << T[j][k] << " ";
+  //   }
+  //   std::cout << std::endl;
+  // }
   
     // Backtrace to find the solution
   int k = max_time_k - 1;

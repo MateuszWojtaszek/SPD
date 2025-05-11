@@ -68,7 +68,7 @@ int main() {
   pronto_task<Zupelny>(tasks, 2);
   pronto_task<PDynamczine>(tasks, 2);
   pronto_task<PTAS>(tasks, 2);
-  // pronto_task<FPTAS>(tasks, 2);
+  pronto_task<FPTAS>(tasks, 2);
 
   return 0;
 }
