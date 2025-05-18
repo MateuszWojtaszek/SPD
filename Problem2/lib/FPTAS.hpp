@@ -18,8 +18,8 @@ public:
 
   void calculate_heuristic() override;
 
-private:
   float epsilon = 0.1; // Wartość epsilon do kontroli aproksymacji
+private:
 
   // Prywatna metoda do rozwiązania P2||Cmax za pomocą PD, zaadaptowana z PDynamczine
   // Przyjmuje listę zadań (z przeskalowanymi czasami, ale oryginalnymi ID)

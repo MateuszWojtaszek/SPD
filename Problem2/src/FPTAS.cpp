@@ -113,6 +113,8 @@ void FPTAS::calculate_heuristic() {
     if (k_scaler < 1) {
         k_scaler = 1;
     }
+    std::cout << "k_scaler: " << k_scaler << std::endl;
+
 
     // Krok 2: Stwórz nową listę zadań z przeskalowanymi czasami
     std::vector<Task> scaled_tasks_with_ids;
