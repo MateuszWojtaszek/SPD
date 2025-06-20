@@ -16,5 +16,8 @@ class FNEH :public BaseProblem {
     virtual void calculate_heuristic() override;
 
   private:
-    int fneh_cmax_calculate(const std::vector<Task>& seq) const;
+    int fneh_cmax_calculate(const std::vector<Task>& seq,bool remember,bool save) const;
+    
+    // Cache for optimization
+    mutable std::vector<std::vector<int>> last_completion_times;
 };

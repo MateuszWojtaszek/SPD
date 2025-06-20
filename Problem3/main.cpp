@@ -29,25 +29,34 @@ int main() {
   std::vector<Task> tasks;
 
   std::srand(0); // generate not random numbers 
-  // int min_pval=50;
-  // int max_pval=100;
-  // for (int i = 1; i <= 6; ++i) {
-  //   int random_value = min_pval + (std::rand() % (max_pval - min_pval + 1));
-  //   tasks.push_back(Task(i, random_value));
-  // }
-
-  tasks.push_back(Task(1, {3, 5}));
-  tasks.push_back(Task(2, {6, 3}));
-  tasks.push_back(Task(3, {5, 4}));
-  tasks.push_back(Task(4, {2, 6}));
-  tasks.push_back(Task(5,  {56, 5}));
-  tasks.push_back(Task(6, {1, 4}));
-  int maszyny = 3;
+  int min_pval=1;
+  int max_pval=10;
+  int machines = 4; // Assuming 3 machines
   int expected_cmax = 0;
-  expected_cmax= pronto_task<Zupelny>(tasks, maszyny, expected_cmax);
-  pronto_task<NEH>(tasks, maszyny, expected_cmax);
+
+
+  for (int i = 1; i <= 10; ++i) {
+    int random_value = min_pval + (std::rand() % (max_pval - min_pval + 1));
+    // Generate a random processing time for each task
+    std::vector<int> processing_times;
+    for (int j = 0; j < machines; ++j) { // Assuming 3 machines
+      processing_times.push_back(random_value);
+    }
+    tasks.push_back(Task(i, processing_times));
+  }
+
+  // tasks.push_back(Task(1, {3, 5,4}));
+  // tasks.push_back(Task(2, {6, 3,7}));
+  // tasks.push_back(Task(3, {5, 4,2}));
+  // tasks.push_back(Task(4, {2, 6,1}));
+  // tasks.push_back(Task(5,  {6, 5,7}));
+  // tasks.push_back(Task(6, {1, 4,9}));
+
+
+  expected_cmax= pronto_task<Zupelny>(tasks, machines, expected_cmax);
+  pronto_task<NEH>(tasks, machines, expected_cmax);
   pronto_task<Jonson>(tasks, 2, expected_cmax); // Jonson is for 2 machines only
-  pronto_task<FNEH>(tasks, maszyny, expected_cmax);
+  pronto_task<FNEH>(tasks, machines, expected_cmax);
 
 
 

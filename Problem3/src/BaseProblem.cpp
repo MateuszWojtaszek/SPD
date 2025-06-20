@@ -19,12 +19,11 @@ int BaseProblem::get_cmax() {
 int BaseProblem::cmax_calcualate(const std::vector<Task> &dp) {
     if (dp.empty() || maszyny == 0) return 0;
 
-    // dp[i][j] = completion time of i-th task on j-th machine
     std::vector<std::vector<int>> completion_times(dp.size(), std::vector<int>(maszyny, 0));
 
     for (size_t i = 0; i < dp.size(); ++i) {
         for (int j = 0; j < maszyny; ++j) {
-            int proc_time = (j < dp[i].processing_time.size()) ? dp[i].processing_time[j] : 0;
+            int proc_time = dp[i].processing_time[j]; //(j < dp[i].processing_time.size()) ? dp[i].processing_time[j] : 0;
             if (i == 0 && j == 0) {
                 completion_times[i][j] = proc_time;
             } else if (i == 0) {

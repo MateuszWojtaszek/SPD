@@ -5,52 +5,64 @@ FNEH::FNEH(std::vector<Task> tasks, int maszyny): BaseProblem(tasks, maszyny) {
     std::cout << "FNEH" << std::endl;
 }
 
-
-
 // Optimized Cmax calculation for FNEH: only updates affected part
-int FNEH::fneh_cmax_calculate(const std::vector<Task>& seq) const {
+int FNEH::fneh_cmax_calculate(const std::vector<Task>& seq, bool remember,bool save) const {
     if (seq.empty()) return 0;
-    int n = seq.size();
-    int m = maszyny;
-    std::vector<int> prev(m, 0);
-    std::vector<int> curr(m, 0);
-
-    for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < m; ++j) {
-            int up = (i == 0) ? 0 : prev[j];
-            int left = (j == 0) ? 0 : curr[j-1];
-            curr[j] = std::max(up, left) + seq[i].processing_time[j];
-        }
-        prev = curr;
+    
+    std::vector<std::vector<int>> C(seq.size(), std::vector<int>(maszyny, 0));
+    size_t begin_index=0;
+    if (remember && !last_completion_times.empty()) {
+      C = last_completion_times;
+      begin_index = last_completion_times.size();
+      C.resize(seq.size(), std::vector<int>(maszyny, 0));
     }
-    return curr[m-1];
+    
+    for (size_t i = begin_index; i < seq.size(); ++i) {
+      for (int j = 0; j < maszyny; ++j) {
+          int proc_time = seq[i].processing_time[j];
+          if (i == 0 && j == 0) {
+              C[i][j] = proc_time;
+          } else if (i == 0) {
+              C[i][j] = C[i][j-1] + proc_time;
+          } else if (j == 0) {
+              C[i][j] = C[i-1][j] + proc_time;
+          } else {
+              C[i][j] = std::max(C[i-1][j], C[i][j-1]) + proc_time;
+          }
+      }
+    }
+
+    if(save)
+      last_completion_times = C;
+    return C[seq.size()-1][maszyny-1];
 }
 
 void FNEH::calculate_heuristic() {
-    // Step 1: Sort tasks by decreasing sum of processing times
-    std::vector<Task> sorted_tasks = tasks;
-    std::sort(sorted_tasks.begin(), sorted_tasks.end(), NEH::compare_total_time);
+  if (tasks.empty()) return;
+  
+  std::vector<Task> sorted_tasks = tasks;
+  //sortowansk
+  std::sort(sorted_tasks.begin(), sorted_tasks.end(), NEH::compare_total_time);
+  
+  // dla aktualnej sekwnecji tesetuejmy wsyztkie mozliwosci licząc cmax i jak mamy najmnjesze to bierzemy
+  std::vector<Task> best_sequence;
+  for (size_t i = 0; i < sorted_tasks.size(); ++i) {
+      int min_cmax = -1;
+      size_t best_pos = 0;
 
-    std::vector<Task> pi;
+      std::vector<Task> temp = best_sequence;
+      fneh_cmax_calculate(temp, true, true); // Initialize last_completion_times if needed
 
-    // Step 2: Insert each task into the best position using incremental Cmax calculation
-    for (size_t i = 0; i < sorted_tasks.size(); ++i) {
-        int min_cmax = -1;
-        size_t best_pos = 0;
-        // Prepare for incremental calculation
-        for (size_t pos = 0; pos <= pi.size(); ++pos) {
-            // Instead of copying the whole vector, insert in-place for efficiency
-            std::vector<Task> temp = pi;
-            temp.insert(temp.begin() + pos, sorted_tasks[i]);
-            int cmax = fneh_cmax_calculate(temp);
-            if (min_cmax == -1 || cmax < min_cmax) {
-                min_cmax = cmax;
-                best_pos = pos;
-                // Early stopping: if cmax is minimal possible, break
-                if (min_cmax == cmax) break;
-            }
-        }
-        pi.insert(pi.begin() + best_pos, sorted_tasks[i]);
-    }
-    tasks = pi;
+      for (size_t pos = 0; pos <= best_sequence.size(); ++pos) {
+          temp = best_sequence;
+          temp.insert(temp.begin() + pos, sorted_tasks[i]);
+          int cmax = fneh_cmax_calculate(temp,true, false);
+          if (min_cmax == -1 || cmax < min_cmax) {
+              min_cmax = cmax;
+              best_pos = pos;
+          }
+      }
+      best_sequence.insert(best_sequence.begin() + best_pos, sorted_tasks[i]);
+  }
+  tasks = best_sequence;    
 }

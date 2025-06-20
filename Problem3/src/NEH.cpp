@@ -18,7 +18,7 @@ void NEH::calculate_heuristic() {
     std::vector<Task> sorted_tasks = tasks;
     std::sort(sorted_tasks.begin(), sorted_tasks.end(), compare_total_time);
 
-    std::vector<Task> pi; // current best order 
+    std::vector<Task> pi;  
 
     // Step 2: Insert each task into the best position
     for (size_t i = 0; i < sorted_tasks.size(); ++i) {
