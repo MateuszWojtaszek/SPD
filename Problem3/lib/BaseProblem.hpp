@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Task.hpp"
-#include "Processor.hpp"
 #include <vector>
 #include <string>
 #include <fstream>
@@ -12,7 +11,7 @@
 class BaseProblem {
   public:
     BaseProblem() = default;
-    BaseProblem(std::vector<Task> tasks);
+    BaseProblem(std::vector<Task> tasks, int maszyny);
 
     virtual void calculate_heuristic() = 0;
 
@@ -23,9 +22,14 @@ class BaseProblem {
     static void start_timer();
     static float stop_timer();
 
+    // std::vector<Processor> get_processors() {
+    //     return processors;
+    // }
   protected:
     std::vector<Task> tasks;
+    // std::vector<Processor> processors;
     int maszyny;
     static std::chrono::time_point<std::chrono::high_resolution_clock> start_time;
-  
+
+    int cmax_calcualate(const std::vector<Task> &dp);
   };

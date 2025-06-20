@@ -8,12 +8,10 @@ add_executable(Problem2 main.cpp)
 target_sources(Problem2
   PRIVATE
     src/BaseProblem.cpp
-    src/LSA.cpp
-    src/LPT.cpp
     src/Zupelny.cpp
-    src/PDynamczine.cpp
-    src/PTAS.cpp
-    src/FPTAS.cpp
+    src/NEH.cpp
+    src/FNEH.cpp
+    src/Jonson.cpp
     )
 
 target_include_directories(Problem2

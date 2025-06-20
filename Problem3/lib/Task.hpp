@@ -1,18 +1,18 @@
-//
-// Created by Mateusz Wojtaszek on 30/03/2025.
-//
-
-#ifndef TASK_H
-#define TASK_H
+#pragma once
 #include <string>
+#include <vector>
 
 struct Task {
     int id;
-    int processing_time;
-    Task(int id = 0, int processing_time = 0) : id(id), processing_time(processing_time) {};
+    std::vector<int> processing_time;
+    // Holds processing times for each machine in the flowshop
+    Task(int id = 0, std::vector<int> rt = {}) : id(id), processing_time(rt) {};
 
     std::string to_string() const {
-        return "ID:"+ std::to_string(id) + ", PT:" + std::to_string(processing_time);
+        std::string result = "Task ID: " + std::to_string(id) + ", Release Times: ";
+        for (const auto &time : processing_time) {
+            result += std::to_string(time) + " ";
+        }
+        return result;
     }
 };
-#endif //TASK_H
