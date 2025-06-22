@@ -16,49 +16,40 @@ Jonson::Jonson(std::vector<Task> tasks, int maszyny): BaseProblem(tasks, maszyny
     std::cout << "Jonson" << std::endl;
 }
 
-void Jonson::calculate_heuristic(){
-  std::vector<Task> old_tasks = tasks;
-  std::vector<Task>   m1;
-  std::vector<Task>   m2;
-  int prmin_1 = std::numeric_limits<int>::max();
-  int prmin_2 = std::numeric_limits<int>::max();
-  size_t index_1 = 0;
-  size_t index_2 = 0;
-  
-  for (size_t i=0; i < tasks.size(); ++i)
-  {
-    for (size_t j=0; j < old_tasks.size(); ++j){
-      auto& task = old_tasks[j];
-
-      if (task.processing_time.size() < 2) {
-        std::cerr << "Error: Jonson's algorithm requires at least two processing times per task." << std::endl;
+void Jonson::calculate_heuristic() {
+    if (maszyny != 2) {
+        std::cerr << "Algorytm Johnsona dziala tylko dla 2 maszyn!" << std::endl;
         return;
-      }
-      if (task.processing_time[0] < prmin_1) {
-        prmin_1 = task.processing_time[0];
-        index_1 = j;
-      }
-      if (task.processing_time[1] < prmin_2) {
-        prmin_2 = task.processing_time[1];
-        index_2 = j;
-      }
     }
-    
-    if (prmin_1 < prmin_2) {
-      m1.push_back(old_tasks[index_1]);
-      old_tasks.erase(old_tasks.begin() + index_1);
-    } else {
-      m2.push_back(old_tasks[index_2]);
-      
-      old_tasks.erase(old_tasks.begin() + index_2);
+
+    // Krok 1: Podział na grupy
+    std::vector<Task> group1, group2;
+    for (const auto& task : tasks) {
+        if (task.processing_time.size() >= 2) { // Zabezpieczenie
+            if (task.processing_time[0] < task.processing_time[1]) {
+                group1.push_back(task);
+            } else {
+                group2.push_back(task);
+            }
+        }
     }
-    prmin_1 = std::numeric_limits<int>::max();
-    prmin_2 = std::numeric_limits<int>::max();
-  }
 
-  // Combine m1 and m2 into tasks
-  tasks.clear();
-  tasks.insert(tasks.end(), m1.begin(), m1.end());
-  tasks.insert(tasks.end(), m2.begin(), m2.end());
 
+    // Krok 2: Sortowanie grupy 1 (rosnąco po czasie na maszynie 1)
+    std::sort(group1.begin(), group1.end(), [](const Task& a, const Task& b) {
+        return a.processing_time[0] < b.processing_time[0];
+    });
+
+    // Krok 3: Sortowanie grupy 2 (malejąco po czasie na maszynie 2)
+    std::sort(group2.begin(), group2.end(), [](const Task& a, const Task& b) {
+        return a.processing_time[1] > b.processing_time[1];
+    });
+
+
+    // Krok 4: Złączenie grup i zapisanie wyniku
+    std::vector<Task> optimal_sequence;
+    optimal_sequence.insert(optimal_sequence.end(), group1.begin(), group1.end());
+    optimal_sequence.insert(optimal_sequence.end(), group2.begin(), group2.end());
+
+    tasks = optimal_sequence;
 }

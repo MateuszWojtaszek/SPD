@@ -2,12 +2,15 @@
 
 // Helper: sum of processing times for a task
 bool NEH::compare_total_time(const Task& a, const Task& b) {
-    int suma_a = 0, suma_b = 0;
+    long long suma_a = 0, suma_b = 0; // Użyj long long dla bezpieczeństwa
     for (int t : a.processing_time) suma_a += t;
     for (int t : b.processing_time) suma_b += t;
-    return suma_a > suma_b;
-}
 
+    if (suma_a != suma_b) {
+        return suma_a > suma_b; // Główne kryterium: malejąca suma
+    }
+    return a.id < b.id; // KRYTERIUM ROZSTRZYGANIA REMISU: rosnące ID
+}
 NEH::NEH(std::vector<Task> tasks, int maszyny)
     : BaseProblem(tasks, maszyny) {
     std::cout << "NEH" << std::endl;

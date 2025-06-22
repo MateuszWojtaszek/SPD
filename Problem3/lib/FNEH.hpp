@@ -1,23 +1,13 @@
+// Plik: FNEH.hpp
 #pragma once
 
-#include "Task.hpp"
-#include <vector>
-#include <string>
-#include <fstream>
-#include <iostream>
-#include <algorithm>
-#include <chrono>
-#include "BaseProblem.hpp"
-#include "Task.hpp"
+#include "NEH.hpp"
 
-class FNEH :public BaseProblem {
-  public:
-    FNEH(std::vector<Task> tasks, int maszyny);
-    virtual void calculate_heuristic() override;
+class FNEH : public NEH {
+public:
+  FNEH(std::vector<Task> tasks, int maszyny);
+  void calculate_heuristic() override;
 
-  private:
-    int fneh_cmax_calculate(const std::vector<Task>& seq,bool remember,bool save) const;
-    
-    // Cache for optimization
-    mutable std::vector<std::vector<int>> last_completion_times;
+private:
+  int calculate_cmax_for_permutation(const std::vector<Task>& permutation);
 };

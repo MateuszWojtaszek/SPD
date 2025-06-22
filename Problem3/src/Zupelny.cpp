@@ -46,5 +46,6 @@ void Zupelny::calculate_heuristic() {
 
   tasks = best_permutation;
 
+
 }
   

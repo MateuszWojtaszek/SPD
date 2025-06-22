@@ -1,66 +1,100 @@
 #include <iostream>
 #include <vector>
+#include <string>
+#include <fstream>
 #include <cstdlib>
-#include <ctime>
-
+#include <numeric>
+#include <cmath>
+#include <iomanip> // Potrzebne do formatowania tabeli
 
 #include "BaseProblem.hpp"
-#include "Task.hpp" 
+#include "Task.hpp"
 #include "Zupelny.hpp"
-#include "NEH.hpp"
-#include "FNEH.hpp"
-#include "Jonson.hpp"
-
-template <typename T>
-int pronto_task(std::vector<Task> &tasks, int maszyny,int expected_cmax = 0) {
-  static_assert(std::is_base_of<BaseProblem, T>::value, "T must derive from BaseProblem");
-  T problem(tasks, maszyny);
-  problem.start_timer();
-  problem.calculate_heuristic();
-  auto a = problem.stop_timer();
-  auto cmax = problem.get_cmax();
-  // problem.print_task_instance();
-  float error = (float)(cmax - expected_cmax) / (float)expected_cmax * 100.0f;
-  std::cout << "Cmax: " << cmax << " Time:" << a << " Error:" <<  error<< std::endl;
-  return cmax;
-}
+#include "BandB.hpp"
+#include "NEH.hpp" // B&B używa NEH do inicjalizacji
 
 int main() {
-  std::vector<Task> tasks;
+    // Ustaw ścieżkę do nowego pliku testowego
+    const std::string data_filepath = "/Users/mateuszwojtaszek/CLionProjects/SPD/SPD/Problem3/zupelny_vs_bandb_tests.dat";
 
-  std::srand(0); // generate not random numbers 
-  int min_pval=1;
-  int max_pval=10;
-  int machines = 4; // Assuming 3 machines
-  int expected_cmax = 0;
-
-
-  for (int i = 1; i <= 10; ++i) {
-    int random_value = min_pval + (std::rand() % (max_pval - min_pval + 1));
-    // Generate a random processing time for each task
-    std::vector<int> processing_times;
-    for (int j = 0; j < machines; ++j) { // Assuming 3 machines
-      processing_times.push_back(random_value);
+    std::ifstream data_file(data_filepath);
+    if (!data_file.is_open()) {
+        std::cerr << "Błąd: Nie można otworzyć pliku " << data_filepath << std::endl;
+        return 1;
     }
-    tasks.push_back(Task(i, processing_times));
-  }
 
-  // tasks.push_back(Task(1, {3, 5,4}));
-  // tasks.push_back(Task(2, {6, 3,7}));
-  // tasks.push_back(Task(3, {5, 4,2}));
-  // tasks.push_back(Task(4, {2, 6,1}));
-  // tasks.push_back(Task(5,  {6, 5,7}));
-  // tasks.push_back(Task(6, {1, 4,9}));
+    int num_instances;
+    data_file >> num_instances;
 
+    // --- Nagłówek Tabeli Wyników ---
+    std::cout << "Porównanie algorytmów dokładnych: Przegląd Zupełny vs. Branch and Bound" << std::endl;
+    std::cout << std::string(100, '-') << std::endl;
+    std::cout << std::left
+              << std::setw(12) << "Instancja"
+              << std::setw(4)  << "n"
+              << std::setw(4)  << "m"
+              << std::setw(15) << "Cmax (Zup.)"
+              << std::setw(15) << "Czas_Z [ms]"
+              << std::setw(15) << "Cmax (B&B)"
+              << std::setw(15) << "Czas_B&B [ms]"
+              << std::setw(12) << "Błąd abs."
+              << std::setw(12) << "Błąd [%]" << std::endl;
+    std::cout << std::string(100, '-') << std::endl;
 
-  expected_cmax= pronto_task<Zupelny>(tasks, machines, expected_cmax);
-  pronto_task<NEH>(tasks, machines, expected_cmax);
-  pronto_task<Jonson>(tasks, 2, expected_cmax); // Jonson is for 2 machines only
-  pronto_task<FNEH>(tasks, machines, expected_cmax);
+    for (int i = 0; i < num_instances; ++i) {
+        int n, m;
+        data_file >> n >> m;
 
+        // Wczytywanie zadań z pliku
+        std::vector<Task> tasks;
+        for (int j = 0; j < n; ++j) {
+            std::vector<int> processing_times;
+            int machine_idx, processing_time;
+            for (int k = 0; k < m; ++k) {
+                data_file >> machine_idx >> processing_time;
+                processing_times.push_back(processing_time);
+            }
+            tasks.push_back(Task(j + 1, processing_times));
+        }
 
+        // Tworzymy osobne kopie zadań dla każdego algorytmu, aby zapewnić te same warunki startowe
+        std::vector<Task> tasks_for_zupelny = tasks;
+        std::vector<Task> tasks_for_bandb = tasks;
 
-  
+        // --- Uruchomienie Przeglądu Zupełnego (jako wzorzec optimum) ---
+        Zupelny problem_zupelny(tasks_for_zupelny, m);
+        problem_zupelny.start_timer();
+        problem_zupelny.calculate_heuristic();
+        auto time_zupelny = problem_zupelny.stop_timer();
+        int optimal_cmax = problem_zupelny.get_cmax(); // Ten wynik to nasze 100% optimum
 
-  return 0;
+        // --- Uruchomienie Branch and Bound ---
+        BandB problem_bandb(tasks_for_bandb, m);
+        problem_bandb.start_timer();
+        problem_bandb.calculate_heuristic();
+        auto time_bandb = problem_bandb.stop_timer();
+        int bandb_cmax = problem_bandb.get_cmax();
+
+        // --- Obliczenie błędów B&B względem Przeglądu Zupełnego ---
+        int absolute_error = std::abs(bandb_cmax - optimal_cmax);
+        float relative_error = (optimal_cmax > 0) ? (static_cast<float>(absolute_error) / optimal_cmax * 100.0f) : 0.0f;
+
+        // --- Wypisanie wiersza tabeli ---
+        std::cout << std::left
+                  << std::setw(12) << (i + 1)
+                  << std::setw(4)  << n
+                  << std::setw(4)  << m
+                  << std::setw(15) << optimal_cmax
+                  << std::setw(15) << std::fixed << std::setprecision(4) << time_zupelny
+                  << std::setw(15) << bandb_cmax
+                  << std::setw(15) << time_bandb
+                  << std::setw(12) << absolute_error
+                  << std::setw(12) << relative_error
+                  << std::endl;
+    }
+
+    data_file.close();
+    std::cout << std::string(100, '-') << std::endl;
+
+    return 0;
 }
