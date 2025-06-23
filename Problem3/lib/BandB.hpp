@@ -20,8 +20,8 @@ private:
     std::vector<Task> best_permutation_so_far; // Najlepsza permutacja znaleziona do tej pory
 
     // Rekurencyjna funkcja implementująca strategię "najpierw w głąb" (DFS)
-    void branch(std::vector<Task>& current_permutation, std::vector<Task>& unscheduled_tasks);
+    void branch(std::vector<Task> &current_permutation, std::vector<Task> &unscheduled_tasks);
 
     // Funkcja obliczająca dolne ograniczenie (LB) dla danego węzła drzewa
-    int calculate_lower_bound(const std::vector<Task>& partial_permutation, const std::vector<Task>& unscheduled_tasks);
+    int calculate_lower_bound(const std::vector<Task> &partial_permutation, const std::vector<Task> &unscheduled_tasks);
 };
